@@ -1,3 +1,6 @@
+// boss.js
+// delete this file later. we'll use this as a guide to implement enemy AI
+
 import {Bullet} from "./bullet.js";
 import {HealthBar} from "./HealthBar.js"
 

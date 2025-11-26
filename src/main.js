@@ -1,25 +1,25 @@
-import { Start } from './scenes/Start.js';
-import { GameOver } from './scenes/GameOver.js';
-import { YouWin } from './scenes/YouWin.js';
+// main.js
+
+//import Phaser from '../phaser.js'; // DONT UNCOMMENT THIS IS WHY IT WAS BLACK SCREEN FOR SO LONG
+import Start from './scenes/start.js';
+import StartEnemyLevel from './scenes/startEnemyLevel.js';
+import StartPortalLevel from './scenes/startPortalLevel.js';
 
 const config = {
     type: Phaser.AUTO,
-    title: 'Overlord Rising',
-    description: '',
-    parent: 'game-container',
-    width: 1280,
-    height: 720,
-    backgroundColor: '#000000',
-    pixelArt: true,
-    physics: {default: "arcade"},
-    scene: [
-        Start, GameOver, YouWin
-    ],
-    scale: {
-        mode: Phaser.Scale.FIT,
-        autoCenter: Phaser.Scale.CENTER_BOTH
+    roundPixels: false,
+    width: 800,
+    height: 800,
+    backgroundColor: '#8bb7d9ff', 
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 1500 },
+            debug: false
+        }
     },
-}
+    pixelArt: true,
+    scene: [Start, StartEnemyLevel, StartPortalLevel] 
+};
 
 new Phaser.Game(config);
-            
