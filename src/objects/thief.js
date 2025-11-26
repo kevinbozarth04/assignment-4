@@ -1,6 +1,6 @@
-export default class Slime extends Phaser.Physics.Arcade.Sprite {
+export default class Thief extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, player, x, y, minX, maxX) {
-        super(scene, x, y, 'slime');
+        super(scene, x, y, 'thief');
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
@@ -26,8 +26,7 @@ export default class Slime extends Phaser.Physics.Arcade.Sprite {
     }
 
     die(){
-        this.scene.sound.play('slimeDeath', { volume: 10 });
-        this.player.slimesKilled++;
+        this.scene.sound.play('thiefDeath', { volume: 10 });
         this.destroy();
     }
 

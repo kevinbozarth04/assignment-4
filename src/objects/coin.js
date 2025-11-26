@@ -24,7 +24,7 @@ export default class coin extends Phaser.Physics.Arcade.Sprite {
 
     pickup(){
         this.player.coinCount++;
-        this.scene.sound.play('coin');    
+        this.scene.sound.play('coin');   
         this.destroy();
     }
 }
