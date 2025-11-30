@@ -10,18 +10,15 @@ export default class slash extends Phaser.Physics.Arcade.Sprite {
 
         scene.add.existing(this);
         scene.physics.add.existing(this);
-        this.body.setSize(40, 25);
+        this.body.setSize(60, 20);
         this.setDepth(25);    
         this.body.setAllowGravity(false);
-        //this.body.setOffset(35, 8);
+        this.body.setOffset(35, 8);
         this.setScale(0.6);
 
         if(enemies){
             enemies.forEach(enemy => {
-                scene.physics.add.collider(enemy, this, () => {
-                enemy.die();
-                }); 
-
+                scene.physics.add.collider(enemy, this, () => {enemy.die();});
             });
         }
 
@@ -36,17 +33,14 @@ export default class slash extends Phaser.Physics.Arcade.Sprite {
         scene.time.delayedCall(400, () => {this.destroy(); this.player.attacking = false;}, [], this);
     }
 
-    
-    preUpdate(time, delta){
+    preUpdate(time, delta) {
         super.preUpdate(time, delta);
-        if(this.player.flipX){
+        if (this.player.flipX) {
             this.setFlipX(true);
             this.x = this.player.x - this.offsetX;
-
-        }else{
+        } else {
             this.setFlipX(false);
             this.x = this.player.x + this.offsetX;
-
         }
         this.y = this.player.y + this.offsetY;
     }

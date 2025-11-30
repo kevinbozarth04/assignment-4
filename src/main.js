@@ -7,14 +7,18 @@ import StartLevelSam from './scenes/startLevelSam.js';
 const config = {
     type: Phaser.AUTO,
     roundPixels: false,
-    width: 2100,
-    height: 1400,
+    //width: 1600,
+    //height: 900,
+    scale: {
+        mode: Phaser.Scale.RESIZE,
+        autoCenter: Phaser.Scale.CENTER_BOTH
+    },
     backgroundColor: '#000000ff', 
     physics: {
         default: 'arcade',
         arcade: {
             gravity: { y: 0 },
-            debug: false
+            debug: true
         }
     },
     pixelArt: true,

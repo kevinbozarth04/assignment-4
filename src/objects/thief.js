@@ -25,7 +25,7 @@ export default class Thief extends Phaser.Physics.Arcade.Sprite {
         this.direction = 1; // 1 for right, -1 for left
     }
 
-    die(){
+    die() {
         this.scene.sound.play('thiefDeath', { volume: 10 });
         this.destroy();
     }

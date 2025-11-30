@@ -1,7 +1,5 @@
 // start.js
 // Starts off as a menu to choose between the two levels:
-// - enemy level (Vee's level)
-// - portal level (Kevin's level)
 
 export default class Start extends Phaser.Scene {
     constructor() { super('Start'); }
@@ -14,18 +12,20 @@ export default class Start extends Phaser.Scene {
         this.load.image('world_tileset', 'assets/sprites/world_tileset.png');
         this.load.image('platforms', 'assets/sprites/platforms.png'); 
         this.load.image('dust', 'assets/sprites/dust.png'); 
+        this.load.image('kitchen', 'assets/sprites/kitchen.png');
 
         // PLAYER
         this.load.spritesheet('ben', 'assets/sprites/ben.png', {
             frameWidth: 32, frameHeight: 32
         });
-        this.load.spritesheet('coin', 'assets/sprites/coin.png', {
-            frameWidth: 16, frameHeight: 16
-        });
         this.load.spritesheet('slash', 'assets/sprites/slash.png', {
             frameWidth: 64, frameHeight: 47
         });
-        this.load.image('thief', 'assets/sprites/thief.png'); 
+
+        // NPCs
+        this.load.image('thief', 'assets/sprites/thief.png');
+        this.load.image('pig', 'assets/sprites/pig.png');
+        this.load.image('evilPig', 'assets/sprites/evil_pig.png');
 
         // SOUNDS 
         this.load.audio('coin', 'assets/sounds/coin.wav');
@@ -33,12 +33,19 @@ export default class Start extends Phaser.Scene {
         this.load.audio('hurt', 'assets/sounds/hurt.wav');
         this.load.audio('jump', 'assets/sounds/jump.wav'); 
         this.load.audio('attack', 'assets/sounds/attack.mp3');
-        this.load.audio('thiefDeath', 'assets/sounds/thiefDeath.wav');
+        this.load.audio('death', 'assets/sounds/thiefDeath.wav');
         this.load.audio('power_up', 'assets/sounds/power_up.wav');
         this.load.audio('teleport', 'assets/sounds/teleport.wav');
         this.load.audio('win', 'assets/sounds/win.wav');
-        this.load.audio('mysteryMusic', 'assets/sounds/music.mp3'); 
+        this.load.audio('mysteryMusic', 'assets/sounds/music.mp3');
 
+        // INGREDIENTS  // i put placeholder images in the sprites folder
+        this.load.image('flour', 'assets/sprites/flour.png');
+        this.load.image('water', 'assets/sprites/water.png');
+        this.load.image('pork', 'assets/sprites/pork.png');
+        this.load.image('cabbage', 'assets/sprites/cabbage.png');
+        this.load.image('onion', 'assets/sprites/onion.png'); 
+        
     }
 
     create() {
@@ -52,12 +59,14 @@ export default class Start extends Phaser.Scene {
         this.add.text(480, 400, '  -=|Controls|=- \n[WASD] Movement\n[J] Attack',
         { fontSize: 16, color: '#ffffffff', align: 'left' }).setOrigin(0.5);
 
-        /*// music start
+        /*
+        // music start
         let mus = this.sound.get('mysteryMusic');
         if (!mus) {
             mus = this.sound.add('mysteryMusic', {loop: true});
             mus.play();
-        }*/
+        }
+        */
 
         // start level
         this.input.keyboard.on('keydown-ONE', () => this.scene.start('StartLevelKevin'));

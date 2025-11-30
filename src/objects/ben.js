@@ -7,12 +7,13 @@ export default class Ben extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, 'ben', 0);
         this.scene = scene;
         this.spawnPoint = { x, y };
-        this.speed = 200;
+        this.speed = 100;
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.body.setAllowGravity(false); // no gravity
         this.setCollideWorldBounds(true); // world bound collisions
-        this.body.setSize(20, 20).setOffset(6, 6); // top-down style hitbox
+        this.body.setSize(30, 30).setOffset(0, 0); // top-down style hitbox
+        this.setScale(0.5) // size
         this.attacking = false; // attack
 
         // CONTROLS
@@ -22,9 +23,11 @@ export default class Ben extends Phaser.Physics.Arcade.Sprite {
             left: Phaser.Input.Keyboard.KeyCodes.A,
             right: Phaser.Input.Keyboard.KeyCodes.D,
             attack: Phaser.Input.Keyboard.KeyCodes.J
+            //cook: Phaser.INput.Keyboard.KeyCodes.C
         });
 
     }
+
     die() {
         this.scene.sound.play('hurt');
         this.setPosition(this.spawnPoint.x, this.spawnPoint.y);

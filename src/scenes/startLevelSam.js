@@ -2,8 +2,6 @@
 
 import Ben from '../objects/ben.js';
 //import Enemy from '../objects/enemy.js';
-import Coin from '../objects/coin.js';
-import Finish from '../objects/finish.js';
 
 export default class StartLevelSam extends Phaser.Scene {
     constructor() { super('StartLevelSam'); }
