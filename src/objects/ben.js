@@ -7,7 +7,7 @@ export default class Ben extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, 'ben', 0);
         this.scene = scene;
         this.spawnPoint = { x, y };
-        this.speed = 100;
+        this.speed = 200;
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.body.setAllowGravity(false); // no gravity
@@ -22,8 +22,8 @@ export default class Ben extends Phaser.Physics.Arcade.Sprite {
             down: Phaser.Input.Keyboard.KeyCodes.S,
             left: Phaser.Input.Keyboard.KeyCodes.A,
             right: Phaser.Input.Keyboard.KeyCodes.D,
-            attack: Phaser.Input.Keyboard.KeyCodes.J
-            //cook: Phaser.INput.Keyboard.KeyCodes.C
+            attack: Phaser.Input.Keyboard.KeyCodes.J,
+            cook: Phaser.Input.Keyboard.KeyCodes.C
         });
 
     }

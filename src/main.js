@@ -7,8 +7,6 @@ import StartLevelSam from './scenes/startLevelSam.js';
 const config = {
     type: Phaser.AUTO,
     roundPixels: false,
-    //width: 1600,
-    //height: 900,
     scale: {
         mode: Phaser.Scale.RESIZE,
         autoCenter: Phaser.Scale.CENTER_BOTH

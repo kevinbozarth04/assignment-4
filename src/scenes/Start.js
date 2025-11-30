@@ -45,6 +45,9 @@ export default class Start extends Phaser.Scene {
         this.load.image('pork', 'assets/sprites/pork.png');
         this.load.image('cabbage', 'assets/sprites/cabbage.png');
         this.load.image('onion', 'assets/sprites/onion.png'); 
+
+        // OTHER
+        this.load.image('heart', 'assets/sprites/heart.png');
         
     }
 
@@ -58,6 +61,8 @@ export default class Start extends Phaser.Scene {
 
         this.add.text(480, 400, '  -=|Controls|=- \n[WASD] Movement\n[J] Attack',
         { fontSize: 16, color: '#ffffffff', align: 'left' }).setOrigin(0.5);
+
+        
 
         /*
         // music start

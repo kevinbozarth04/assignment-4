@@ -13,7 +13,7 @@ export default class slash extends Phaser.Physics.Arcade.Sprite {
         this.body.setSize(60, 20);
         this.setDepth(25);    
         this.body.setAllowGravity(false);
-        this.body.setOffset(35, 8);
+        //this.body.setOffset(35, 8);
         this.setScale(0.6);
 
         if(enemies){

@@ -2,7 +2,8 @@
 
 import Ben from '../objects/ben.js';
 import Thief from '../objects/thief.js';
-//import HealthBar from 'src/gameobjects/HealthBar.js';
+import {HealthBar} from '../objects/health_bar.js'; // might not use
+
 export default class StartLevelKevin extends Phaser.Scene {
     constructor() { super('StartLevelKevin'); }
 
@@ -12,6 +13,16 @@ export default class StartLevelKevin extends Phaser.Scene {
     create() {
         this.player = new Ben(this, 350, 740); // spawnpoint
         this.timeTaken = 0;
+
+        // TILEMAP
+        const map = this.make.tilemap({ key: "StartLevelKevin" });
+        const tileset = map.addTilesetImage("world_tileset", "world_tileset");
+
+        // CAMERA
+        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        this.cameras.main.startFollow(this.player, true, 1, 1);
+        this.cameras.main.setZoom(4); // change to 4 later
 
         // INGREDIENTS
         const flour = this.add.sprite(400, 300, 'flour').setScale(0.5); // set the starting coordinates yourself
@@ -48,10 +59,6 @@ export default class StartLevelKevin extends Phaser.Scene {
         this.physics.add.existing(evilPig, true);
         evilPig.setDepth(3);
 
-        // TILEMAP
-        const map = this.make.tilemap({ key: "StartLevelKevin" });
-        const tileset = map.addTilesetImage("world_tileset", "world_tileset");
-
         // KITCHEN
         const kitchen = this.add.sprite(380, 730, 'kitchen').setScale(0.3);
         this.physics.add.existing(kitchen, true);
@@ -70,12 +77,6 @@ export default class StartLevelKevin extends Phaser.Scene {
         this.player.depth = 10;
         this.physics.add.collider(this.player, this.layers["obstacle"]);
         this.physics.add.collider(this.player, this.layers["danger"], () => {this.player.die();});
-
-        // CAMERA
-        this.cameras.main.setBounds(0, 0, map.widthInPixels+0, map.heightInPixels+0);
-        this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-        this.cameras.main.startFollow(this.player, true, 1, 1);
-        this.cameras.main.setZoom(4); // change to 4 later
         
         this.updatables = [];
         this.enemies = [];
@@ -85,6 +86,27 @@ export default class StartLevelKevin extends Phaser.Scene {
         // - Enemy (thief or evil pig)
         // - Pig
         // - Spawn coordinates of all sprites
+
+        // UI
+        this.healthText = this.add.text(980, 350, "HP: 3", {
+            fontSize: "32px",
+            fill: "#fff"
+        })
+        this.healthText.setScrollFactor(0);
+        this.healthText.setScale(0.3);
+        this.healthText.setDepth(9999);
+
+        this.checklistText = this.add.text(660, 350,
+            "[✔️] Flour\n[❌] Water\n[❌] Pork\n[❌] Cabbage\n[❌] Green onion",
+            {
+                fontSize: "26px",
+                color: "#ffffff",
+            });
+        this.checklistText.setScrollFactor(0);
+        this.checklistText.setDepth(9999);
+        this.checklistText.setOrigin(0, 0);
+        this.checklistText.setScale(0.3);
+    
     }
 
     endGame() {
@@ -126,5 +148,7 @@ export default class StartLevelKevin extends Phaser.Scene {
     update(time, delta) {
         this.updatables.forEach(updatable => updatable.update());
         this.timeTaken += delta;
+
+
     }
 }
