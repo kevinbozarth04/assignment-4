@@ -1,22 +1,68 @@
 // startLevelSam.js
 
 import Ben from '../objects/ben.js';
-//import Enemy from '../objects/enemy.js';
+import Thief from '../objects/thief.js';
 
-export default class StartLevelSam extends Phaser.Scene {
+export default class StartLevelKevin extends Phaser.Scene {
     constructor() { super('StartLevelSam'); }
 
+    preload() {
+    }
+
     create() {
-        this.player = new Ben(this, 50, 760);
+        this.player = new Ben(this, 350, 740); // spawnpoint
         this.timeTaken = 0;
-        this.coinCount = 0; 
-        this.portalCount = 0;
-        this.gameEnded = false;
 
         // TILEMAP
-        const map = this.make.tilemap({key: 'StartLevelSam' }) // same key from start.js
+        const map = this.make.tilemap({ key: "StartLevelSam" });
         const tileset = map.addTilesetImage("world_tileset", "world_tileset");
-  
+
+        // CAMERA
+        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        this.cameras.main.startFollow(this.player, true, 1, 1);
+        this.cameras.main.setZoom(4); // change to 4 later
+
+        // INGREDIENTS
+        const flour = this.add.sprite(400, 300, 'flour').setScale(0.5); // set the starting coordinates yourself
+        const water = this.add.sprite(400, 400, 'water').setScale(0.5);
+        const pork = this.add.sprite(400, 500, 'pork').setScale(0.5);
+        const cabbage = this.add.sprite(400, 600, 'cabbage').setScale(0.5);
+        const onion = this.add.sprite(200, 400, 'onion').setScale(0.5);
+        this.physics.add.existing(flour, true);
+        this.physics.add.existing(water, true);
+        this.physics.add.existing(pork, true);
+        this.physics.add.existing(cabbage, true);
+        this.physics.add.existing(onion, true);
+        flour.setDepth(3);
+        water.setDepth(3);
+        pork.setDepth(3);
+        cabbage.setDepth(3);
+        onion.setDepth(3);
+        this.gotFlour = false;
+        this.gotWater = false;
+        this.gotPork = false;
+        this.gotCabbage = false;
+        this.gotOnion = false;
+
+        // NPCs
+        const thief = this.add.sprite(100, 700, 'thief').setScale(0.7);
+        this.physics.add.existing(thief, true);
+        thief.setDepth(3);
+
+        const pig = this.add.sprite(200, 600, 'pig').setScale(0.4);
+        this.physics.add.existing(pig, true);
+        pig.setDepth(3);
+
+        const evilPig = this.add.sprite(200, 700, 'evilPig').setScale(0.6);
+        this.physics.add.existing(evilPig, true);
+        evilPig.setDepth(3);
+
+        // KITCHEN
+        const kitchen = this.add.sprite(380, 730, 'kitchen').setScale(0.3);
+        this.physics.add.existing(kitchen, true);
+        kitchen.setDepth(2);
+
         // LAYERS
         this.layers = {};
         this.layers["background"] = map.createLayer("background", tileset, 0, 0);
@@ -30,76 +76,78 @@ export default class StartLevelSam extends Phaser.Scene {
         this.player.depth = 10;
         this.physics.add.collider(this.player, this.layers["obstacle"]);
         this.physics.add.collider(this.player, this.layers["danger"], () => {this.player.die();});
-    
-        // FINISH LINE
-        const flag = this.add.sprite(160, 65, 'flag').setScale(2);
-        this.physics.add.existing(flag, true);
-        this.physics.add.overlap(this.player, flag, () => {
-            if (this.gameEnded) return; // avoid double trigger spam
-            this.gameEnded = true;
-            this.sound.play('win');
-            this.endGame();
-        }, null, this);
-
-        // CAMERA
-        this.cameras.main.setBounds(0, 0, map.widthInPixels+500, map.heightInPixels+500);
-        this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-        this.cameras.main.startFollow(this.player);
-        this.cameras.main.setZoom(2);
-
+        
         this.updatables = [];
+        this.enemies = [];
         this.instantiateGameObjectsFromLayer(map);
 
-    /*
-    // OBJECTS
-    serializeObjectProperties(propertiesArray) { // same as startEnemyLevel.js
+        // CODE FOR YOU TO ADD
+        // - Enemy (thief or evil pig)
+        // - Pig
+        // - Spawn coordinates of all sprites
+
+        // UI
+        this.healthText = this.add.text(980, 350, "HP: 3", {
+            fontSize: "32px",
+            fill: "#fff"
+        })
+        this.healthText.setScrollFactor(0);
+        this.healthText.setScale(0.3);
+        this.healthText.setDepth(9999);
+
+        this.checklistText = this.add.text(660, 350,
+            "[✔️] Flour\n[❌] Water\n[❌] Pork\n[❌] Cabbage\n[❌] Green onion",
+            {
+                fontSize: "26px",
+                color: "#ffffff",
+            });
+        this.checklistText.setScrollFactor(0);
+        this.checklistText.setDepth(9999);
+        this.checklistText.setOrigin(0, 0);
+        this.checklistText.setScale(0.3);
+    
+    }
+
+    endGame() {
+        this.add.text(16,8,"You won!",{fontSize:20,color:'#ffffffff'});
+        //this.add.text(16,52,`You died ${this.player.deathsCount} times!`,{fontSize:20,color:'#ffffffff'});
+        this.add.text(16,22,`Time taken: ${(this.timeTaken / 1000).toFixed(2)} seconds`,{fontSize:20,color:'#ffffffff'});
+        this.time.delayedCall(5000, () => {this.gameEnded = false;
+            this.scene.start('Start');
+        }, [], this);
+    }
+
+    // Convert tiled object properties from array to object
+    serializeObjectProperties(propertiesArray) {
         if (!propertiesArray) return {};
         const properties = {};
-        for (let i = 0; i < propertiesArray.length; i++) {
-            const prop = propertiesArray[i]; 
+        for(let prop of propertiesArray){
             properties[prop.name] = prop.value;
-        } 
+        }
         return properties;
     }
 
     instantiateGameObjectsFromLayer(map) {
-        const layer = map.getObjectLayer("gameObjects");
-        if (!layer) return;
-
-        const objects = layer.objects;
+        const objects = map.getObjectLayer("gameObjects").objects;
         for (let obj of objects) {
+            // Convert tiled object properties from array to object
             let properties = this.serializeObjectProperties(obj.properties);
             switch(properties['type']){
-                case "coin":
-                    new Coin(this, this.player, obj.x, obj.y);
-                    this.coinCount++;
-                    break;
-                case "finish":
-                    this.updatables.push(new Finish(this, this.player, obj.x, obj.y, properties["len"], properties["width"]));
-                    break;
-                default: break;
+            case "thief":
+                this.enemies.push(new Thief(this, this.player, obj.x, obj.y, properties["minX"], properties["maxX"]));
+                break;
+            case "spawn":
+                this.player.setPosition(obj.x, obj.y);
+                this.player.spawnPoint = {x: obj.x, y: obj.y};
+                break;
             }
         }
-    }
-
-    endGame() {
-        this.add.text(46, 8, 'You won Kevin\'s Portal Level!', { fontSize: 20, color: '#000000ff' });
-        this.add.text(46, 30, `Coins collected: ${this.player.coinCount} / ${this.coinCount}`, { fontSize: 18, color: '#000000ff' });
-        if (this.player.deathsCount > 0) {
-            this.add.text(46, 52, `Deaths: ${this.player.deathsCount} (noob)`, { fontSize: 18, color: '#000000ff' });
-        } else {
-            this.add.text(46, 52, `Deaths: ${this.player.deathsCount}`, { fontSize: 18, color: '#000000ff' });
-        }
-        this.add.text(46, 74, `Time: ${(this.timeTaken / 1000).toFixed(2)} seconds`, { fontSize: 18, color: '#000000ff' });
-        this.add.text(46, 96, `Teleportations: ${this.portalCount}`, { fontSize: 18, color: '#000000ff' });
-        this.time.delayedCall(5000, () => {
-            this.scene.start('Start');
-        });
-    */
     }
     
     update(time, delta) {
         this.updatables.forEach(updatable => updatable.update());
         this.timeTaken += delta;
+
+
     }
 }
