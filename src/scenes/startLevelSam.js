@@ -12,6 +12,7 @@ export default class StartLevelKevin extends Phaser.Scene {
     create() {
         this.player = new Ben(this, 350, 740); // spawnpoint
         this.timeTaken = 0;
+        this.enemies = [];
 
         // TILEMAP
         const map = this.make.tilemap({ key: "StartLevelSam" });
@@ -76,9 +77,12 @@ export default class StartLevelKevin extends Phaser.Scene {
         this.player.depth = 10;
         this.physics.add.collider(this.player, this.layers["obstacle"]);
         this.physics.add.collider(this.player, this.layers["danger"], () => {this.player.die();});
-        
+        this.enemies.forEach(enemy => { // enemy obstacle collision
+            this.physics.add.collider(enemy, this.layers["obstacle"]);
+        });
+
         this.updatables = [];
-        this.enemies = [];
+        // this.enemies = [];
         this.instantiateGameObjectsFromLayer(map);
 
         // CODE FOR YOU TO ADD
