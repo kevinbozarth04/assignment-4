@@ -1,5 +1,7 @@
+// thief.js
+
 export default class Thief extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, player, x, y, minX, maxX) {
+    constructor(scene, player, x, y) {
         super(scene, x, y, 'thief');
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -7,37 +9,29 @@ export default class Thief extends Phaser.Physics.Arcade.Sprite {
         this.scene = scene;
         this.player = player;
 
-        this.body.setSize(16, 16).setOffset(0, 0); 
-        this.setDepth(20);    
-        this.setScale(1);
+        this.body.setAllowGravity(false);
+        this.setDepth(20);
+        this.setScale(0.8);
         this.body.setCollideWorldBounds(true);
-        scene.physics.add.collider(this, scene.layers["ground"]);
+        scene.physics.add.collider(this, scene.layers["obstacle"]);
 
-        scene.physics.add.collider(player, this, () => {
-          this.player.die();
+        // Damage player on touch
+        scene.physics.add.overlap(player, this, () => {
+            this.player.die();
         });
 
-        
-
-        this.minX = minX;
-        this.maxX = maxX;
         this.speed = 100;
-        this.direction = 1; // 1 for right, -1 for left
+        this.direction = 1; // Future use
     }
 
     die() {
-        this.scene.sound.play('thiefDeath', { volume: 10 });
+        this.scene.sound.play('deathThief', { volume: 1 });
         this.destroy();
     }
 
-    preUpdate() {
-        super.preUpdate();
-        this.setVelocityX(this.speed * this.direction);
+    preUpdate(time, delta) {
+        super.preUpdate(time, delta);
 
-        if (this.x >= this.maxX-19) {
-            this.direction = -1;
-        } else if (this.x <= this.minX+19) {
-            this.direction = 1;
-        }
+        this.setVelocity(0);
     }
 }

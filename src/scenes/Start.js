@@ -28,18 +28,20 @@ export default class Start extends Phaser.Scene {
         this.load.image('evilPig', 'assets/sprites/evil_pig.png');
 
         // SOUNDS 
-        this.load.audio('coin', 'assets/sounds/coin.wav');
+        this.load.audio('collect', 'assets/sounds/collect.wav');
         this.load.audio('explosion', 'assets/sounds/explosion.wav');
         this.load.audio('hurt', 'assets/sounds/hurt.wav');
         this.load.audio('jump', 'assets/sounds/jump.wav'); 
         this.load.audio('attack', 'assets/sounds/attack.mp3');
-        this.load.audio('death', 'assets/sounds/thiefDeath.wav');
+        this.load.audio('deathThief', 'assets/sounds/death_thief.mp3');
+        this.load.audio('deathPig', 'assets/sounds/death_pig.mp3');
+        this.load.audio('deathEvilPig', 'assets/sounds/death_evil_pig.mp3');
         this.load.audio('power_up', 'assets/sounds/power_up.wav');
         this.load.audio('teleport', 'assets/sounds/teleport.wav');
         this.load.audio('win', 'assets/sounds/win.wav');
         this.load.audio('mysteryMusic', 'assets/sounds/music.mp3');
 
-        // INGREDIENTS  // i put placeholder images in the sprites folder
+        // INGREDIENTS
         this.load.image('flour', 'assets/sprites/flour.png');
         this.load.image('water', 'assets/sprites/water.png');
         this.load.image('pork', 'assets/sprites/pork.png');

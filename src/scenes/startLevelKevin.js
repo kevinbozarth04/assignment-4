@@ -2,6 +2,8 @@
 
 import Ben from '../objects/ben.js';
 import Thief from '../objects/thief.js';
+import Pig from '../objects/pig.js';
+import EvilPig from '../objects/evilPig.js';
 import {HealthBar} from '../objects/health_bar.js'; // might not use
 
 export default class StartLevelKevin extends Phaser.Scene {
@@ -25,39 +27,28 @@ export default class StartLevelKevin extends Phaser.Scene {
         this.cameras.main.setZoom(4); // change to 4 later
 
         // INGREDIENTS
-        const flour = this.add.sprite(400, 300, 'flour').setScale(0.5); // set the starting coordinates yourself
-        const water = this.add.sprite(400, 400, 'water').setScale(0.5);
-        const pork = this.add.sprite(400, 500, 'pork').setScale(0.5);
-        const cabbage = this.add.sprite(400, 600, 'cabbage').setScale(0.5);
-        const onion = this.add.sprite(200, 400, 'onion').setScale(0.5);
-        this.physics.add.existing(flour, true);
-        this.physics.add.existing(water, true);
-        this.physics.add.existing(pork, true);
-        this.physics.add.existing(cabbage, true);
-        this.physics.add.existing(onion, true);
+        const flour = this.add.sprite(400, 300, 'flour').setScale(0.01); // set the starting coordinates yourself
+        const water = this.add.sprite(400, 400, 'water').setScale(0.01);
+        const pork = this.add.sprite(400, 500, 'pork').setScale(0.005);
+        const cabbage = this.add.sprite(400, 600, 'cabbage').setScale(0.01);
+        const onion = this.add.sprite(200, 400, 'onion').setScale(0.01);
+        this.ingredients = this.physics.add.group();
+            this.ingredients.add(flour);
+            this.ingredients.add(water);
+            this.ingredients.add(pork);
+            this.ingredients.add(cabbage);
+            this.ingredients.add(onion);
+        this.physics.add.overlap(this.player, this.ingredients, this.collectIngredient, null, this);
         flour.setDepth(3);
         water.setDepth(3);
         pork.setDepth(3);
         cabbage.setDepth(3);
         onion.setDepth(3);
-        this.gotFlour = false;
-        this.gotWater = false;
-        this.gotPork = false;
-        this.gotCabbage = false;
-        this.gotOnion = false;
-
-        // NPCs
-        const thief = this.add.sprite(100, 700, 'thief').setScale(0.7);
-        this.physics.add.existing(thief, true);
-        thief.setDepth(3);
-
-        const pig = this.add.sprite(200, 600, 'pig').setScale(0.4);
-        this.physics.add.existing(pig, true);
-        pig.setDepth(3);
-
-        const evilPig = this.add.sprite(200, 700, 'evilPig').setScale(0.6);
-        this.physics.add.existing(evilPig, true);
-        evilPig.setDepth(3);
+        this.gotFlour = "❌";
+        this.gotWater = "❌";
+        this.gotPork = "❌";
+        this.gotCabbage = "❌";
+        this.gotOnion = "❌";
 
         // KITCHEN
         const kitchen = this.add.sprite(380, 730, 'kitchen').setScale(0.3);
@@ -77,9 +68,12 @@ export default class StartLevelKevin extends Phaser.Scene {
         this.player.depth = 10;
         this.physics.add.collider(this.player, this.layers["obstacle"]);
         this.physics.add.collider(this.player, this.layers["danger"], () => {this.player.die();});
-        
+
+
         this.updatables = [];
         this.enemies = [];
+        //this.pigs = [];
+        //this.evilPigs = [];
         this.instantiateGameObjectsFromLayer(map);
 
         // CODE FOR YOU TO ADD
@@ -88,7 +82,8 @@ export default class StartLevelKevin extends Phaser.Scene {
         // - Spawn coordinates of all sprites
 
         // UI
-        this.healthText = this.add.text(980, 350, "HP: 3", {
+        this.hp = 3;
+        this.healthText = this.add.text(980, 350, `HP: ${this.hp}`, {
             fontSize: "32px",
             fill: "#fff"
         })
@@ -97,16 +92,33 @@ export default class StartLevelKevin extends Phaser.Scene {
         this.healthText.setDepth(9999);
 
         this.checklistText = this.add.text(660, 350,
-            "[✔️] Flour\n[❌] Water\n[❌] Pork\n[❌] Cabbage\n[❌] Green onion",
-            {
-                fontSize: "26px",
-                color: "#ffffff",
-            });
+            `[${this.gotFlour}] Flour\n[${this.gotWater}] Water\n[${this.gotPork}] Pork\n[${this.gotCabbage}] Cabbage\n[${this.gotOnion}] Green onion`, 
+            {fontSize: "26px", color: "#ffffff",});
         this.checklistText.setScrollFactor(0);
         this.checklistText.setDepth(9999);
         this.checklistText.setOrigin(0, 0);
         this.checklistText.setScale(0.3);
     
+    }
+
+    collectIngredient(player, item) {
+        const key = item.texture.key;
+        switch (key) {
+            case "flour": this.gotFlour = "✔️"; break;
+            case "water": this.gotWater = "✔️"; break;
+            case "pork": this.gotPork = "✔️"; break;
+            case "cabbage": this.gotCabbage = "✔️"; break;
+            case "onion": this.gotOnion = "✔️"; break;
+        }
+
+        item.destroy();
+        this.sound.play("collect");
+        this.updateChecklist();
+    }
+
+    updateChecklist() {
+        this.checklistText.setText(
+        `[${this.gotFlour}] Flour\n[${this.gotWater}] Water\n[${this.gotPork}] Pork\n[${this.gotCabbage}] Cabbage\n[${this.gotOnion}] Green onion`);
     }
 
     endGame() {
@@ -133,14 +145,23 @@ export default class StartLevelKevin extends Phaser.Scene {
         for (let obj of objects) {
             // Convert tiled object properties from array to object
             let properties = this.serializeObjectProperties(obj.properties);
-            switch(properties['type']){
-            case "thief":
-                this.enemies.push(new Thief(this, this.player, obj.x, obj.y, properties["minX"], properties["maxX"]));
-                break;
-            case "spawn":
-                this.player.setPosition(obj.x, obj.y);
-                this.player.spawnPoint = {x: obj.x, y: obj.y};
-                break;
+            switch(properties['type']) {
+                case "thief":
+                    const thief = new Thief(this, this.player, obj.x, obj.y);
+                    this.enemies.push(thief);
+                    break;
+                case "pig":
+                    const pig = new Pig(this, this.player, obj.x, obj.y);
+                    this.enemies.push(pig);
+                    break;
+                case "evilPig": // aka the js devs
+                    const evilPig = new EvilPig(this, this.player, obj.x, obj.y);
+                    this.enemies.push(evilPig);
+                    break;
+                case "spawn":
+                    this.player.setPosition(obj.x, obj.y);
+                    this.player.spawnPoint = {x: obj.x, y: obj.y};
+                    break;
             }
         }
     }
