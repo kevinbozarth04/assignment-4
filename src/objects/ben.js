@@ -32,14 +32,16 @@ export default class Ben extends Phaser.Physics.Arcade.Sprite {
 
     die() {
         this.hp -= 1;
-        this.scene.healthText.setText("HP: " + this.hp);
+        this.scene.healthText.setText("Lives: " + this.hp);
         if (this.hp <= 0) {
-            this.scene.scene.restart(); // full death. restart level
+            this.scene.scene.start("GameOver"); // game over screen
             return;
         }
         this.scene.sound.play('hurt');
         this.setPosition(this.spawnPoint.x, this.spawnPoint.y);
     }
+
+
  
     preUpdate(time, delta) {
         super.preUpdate(time, delta);

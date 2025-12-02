@@ -1,4 +1,5 @@
 // evilPig.js
+// Unique AI: Has infite eye sight. Knows where you are on the map at all times and will go in a straight line towards you. It's not smart though so it doesn't know how to go around obstacles
 
 export default class EvilPig extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, player, x, y) {

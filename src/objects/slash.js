@@ -33,13 +33,13 @@ export default class slash extends Phaser.Physics.Arcade.Sprite {
         this.anims.create({
             key: 'attack',
             frames: this.anims.generateFrameNumbers('slash', { start: 0, end: 8 }),
-            frameRate: 20,
+            frameRate: 40,
             repeat: 0
         });
         this.play('attack');
 
-        // destroy slash after 400 ms
-        scene.time.delayedCall(400, () => {
+        // destroy slash after some ms
+        scene.time.delayedCall(200, () => {
             this.destroy();
             this.player.attacking = false;
         });

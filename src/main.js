@@ -3,6 +3,8 @@
 import Start from './scenes/start.js';
 import StartLevelKevin from './scenes/startLevelKevin.js';
 import StartLevelSam from './scenes/startLevelSam.js';
+import GameOver from './scenes/gameOver.js';
+import Win from './scenes/win.js';
 
 const config = {
     type: Phaser.AUTO,
@@ -16,11 +18,11 @@ const config = {
         default: 'arcade',
         arcade: {
             gravity: { y: 0 },
-            debug: true
+            debug: false
         }
     },
     pixelArt: true,
-    scene: [Start, StartLevelKevin, StartLevelSam] 
+    scene: [Start, StartLevelKevin, StartLevelSam, GameOver, Win] 
 };
 
 new Phaser.Game(config);

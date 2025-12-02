@@ -4,7 +4,7 @@ import Ben from '../objects/ben.js';
 import Thief from '../objects/thief.js';
 import Pig from '../objects/pig.js';
 import EvilPig from '../objects/evilPig.js';
-import {HealthBar} from '../objects/health_bar.js'; // might not use
+
 
 export default class StartLevelKevin extends Phaser.Scene {
     constructor() { super('StartLevelKevin'); }
@@ -27,11 +27,11 @@ export default class StartLevelKevin extends Phaser.Scene {
         this.cameras.main.setZoom(4); // change to 4 later
 
         // INGREDIENTS
-        const flour = this.add.sprite(400, 300, 'flour').setScale(0.01); // set the starting coordinates yourself
-        const water = this.add.sprite(400, 400, 'water').setScale(0.01);
-        const pork = this.add.sprite(400, 500, 'pork').setScale(0.005);
-        const cabbage = this.add.sprite(400, 600, 'cabbage').setScale(0.01);
-        const onion = this.add.sprite(200, 400, 'onion').setScale(0.01);
+        const flour = this.add.sprite(50, 50, 'flour').setScale(0.01); // set the starting coordinates yourself
+        const water = this.add.sprite(223, 700, 'water').setScale(0.01);
+        const pork = this.add.sprite(-50, -50, 'pork').setScale(0.005); // pork doesnt spawn. player needs to kill pig to get it
+        const cabbage = this.add.sprite(400, 300, 'cabbage').setScale(0.01);
+        const onion = this.add.sprite(700, 600, 'onion').setScale(0.01);
         this.ingredients = this.physics.add.group();
             this.ingredients.add(flour);
             this.ingredients.add(water);
@@ -55,11 +55,18 @@ export default class StartLevelKevin extends Phaser.Scene {
         this.physics.add.existing(kitchen, true);
         kitchen.setDepth(2);
 
+        this.kitchen = kitchen; 
+        this.inKitchen = false;
+        this.physics.add.overlap(this.player, this.kitchen, () => {
+            this.inKitchen = true;
+        }, null, this);
+        
+
         // LAYERS
         this.layers = {};
         this.layers["background"] = map.createLayer("background", tileset, 0, 0);
         this.layers["obstacle"] = map.createLayer("obstacle", tileset, 0, 0); // obstacle
-        this.layers["decoration"]= map.createLayer("decoration",tileset, 0, 0);
+        this.layers["decoration"]= map.createLayer("decoration",tileset, 0, 0); this.layers["decoration"].setDepth(50);
         this.layers["danger"] = map.createLayer("danger", tileset, 0, 0); // maybe unused.
     
         // COLLISION
@@ -83,7 +90,7 @@ export default class StartLevelKevin extends Phaser.Scene {
 
         // UI
         this.hp = 3;
-        this.healthText = this.add.text(980, 350, `HP: ${this.hp}`, {
+        this.healthText = this.add.text(970, 350, `Lives: ${this.hp}`, {
             fontSize: "32px",
             fill: "#fff"
         })
@@ -99,6 +106,13 @@ export default class StartLevelKevin extends Phaser.Scene {
         this.checklistText.setOrigin(0, 0);
         this.checklistText.setScale(0.3);
     
+        // HIDING SPOTS
+        this.treeHidingSpots = [ 
+            { x: 134, y: 528 },
+            { x: 413, y: 364 },
+            { x: 630, y: 150 },
+        ];
+
     }
 
     collectIngredient(player, item) {
@@ -121,13 +135,14 @@ export default class StartLevelKevin extends Phaser.Scene {
         `[${this.gotFlour}] Flour\n[${this.gotWater}] Water\n[${this.gotPork}] Pork\n[${this.gotCabbage}] Cabbage\n[${this.gotOnion}] Green onion`);
     }
 
-    endGame() {
-        this.add.text(16,8,"You won!",{fontSize:20,color:'#ffffffff'});
-        //this.add.text(16,52,`You died ${this.player.deathsCount} times!`,{fontSize:20,color:'#ffffffff'});
-        this.add.text(16,22,`Time taken: ${(this.timeTaken / 1000).toFixed(2)} seconds`,{fontSize:20,color:'#ffffffff'});
-        this.time.delayedCall(5000, () => {this.gameEnded = false;
-            this.scene.start('Start');
-        }, [], this);
+    hasAllIngredients() {
+        return (
+            this.gotFlour === "✔️" &&
+            this.gotWater === "✔️" &&
+            this.gotPork === "✔️" &&
+            this.gotCabbage === "✔️" &&
+            this.gotOnion === "✔️"
+        );
     }
 
     // Convert tiled object properties from array to object
@@ -147,7 +162,7 @@ export default class StartLevelKevin extends Phaser.Scene {
             let properties = this.serializeObjectProperties(obj.properties);
             switch(properties['type']) {
                 case "thief":
-                    const thief = new Thief(this, this.player, obj.x, obj.y);
+                    const thief = new Thief(this, this.player, obj.x, obj.y, this.treeHidingSpots);
                     this.enemies.push(thief);
                     break;
                 case "pig":
@@ -169,6 +184,19 @@ export default class StartLevelKevin extends Phaser.Scene {
     update(time, delta) {
         this.updatables.forEach(updatable => updatable.update());
         this.timeTaken += delta;
+
+        // cook elgibility
+        this.inKitchen = false; 
+        this.physics.world.overlap(this.player, this.kitchen, () => {
+            this.inKitchen = true;
+        }, null, this);
+
+        // if player in kitchen and press C, LET! HIM! COOK!
+        if (Phaser.Input.Keyboard.JustDown(this.player.keys.cook)) {
+            if (this.inKitchen && this.hasAllIngredients()) {
+                this.scene.start("Win");
+            }
+        }
 
 
     }

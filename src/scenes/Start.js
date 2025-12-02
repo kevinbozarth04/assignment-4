@@ -40,21 +40,26 @@ export default class Start extends Phaser.Scene {
         this.load.audio('teleport', 'assets/sounds/teleport.wav');
         this.load.audio('win', 'assets/sounds/win.wav');
         this.load.audio('mysteryMusic', 'assets/sounds/music.mp3');
+        this.load.audio('bush', 'assets/sounds/bush.mp3');
+        this.load.audio('jumpscare', 'assets/sounds/jumpscare.mp3');
+        this.load.audio('gameOver', 'assets/sounds/game_over.mp3');
+        this.load.audio('scurry', 'assets/sounds/scurry.mp3');
 
         // INGREDIENTS
         this.load.image('flour', 'assets/sprites/flour.png');
         this.load.image('water', 'assets/sprites/water.png');
         this.load.image('pork', 'assets/sprites/pork.png');
         this.load.image('cabbage', 'assets/sprites/cabbage.png');
-        this.load.image('onion', 'assets/sprites/onion.png'); 
+        this.load.image('onion', 'assets/sprites/onion.png');
 
-        // OTHER
-        this.load.image('heart', 'assets/sprites/heart.png');
-        
+        this.load.image('dumplings', 'assets/sprites/dumplings.png');
+        this.load.image('badDumplings', 'assets/sprites/bad_dumplings.jpeg');
     }
 
     create() {
         // menu text
+        this.add.text(480, 100, "DUMPLING HUNTER SIMULATOR", {fontSize: "64px", color: "#ffffffff"}).setOrigin(0.5);
+
         this.add.text(480, 200, 'Select level',
         { fontSize: 24, color: '#fff' }).setOrigin(0.5);
 

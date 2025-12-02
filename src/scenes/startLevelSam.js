@@ -82,6 +82,15 @@ export default class StartLevelKevin extends Phaser.Scene {
         this.physics.add.existing(kitchen, true);
         kitchen.setDepth(2);
 
+        // kevin put this here 12/2/25
+        this.kitchen = kitchen; 
+        this.inKitchen = false;
+        this.physics.add.overlap(this.player, this.kitchen, () => {
+            this.inKitchen = true;
+        }, null, this);
+        
+
+
         // LAYERS
         this.layers = {};
         this.layers["background"] = map.createLayer("background", tileset, 0, 0);
@@ -130,20 +139,21 @@ export default class StartLevelKevin extends Phaser.Scene {
     
     }
 
-    endGame() {
-        this.add.text(16,8,"You won!",{fontSize:20,color:'#ffffffff'});
-        //this.add.text(16,52,`You died ${this.player.deathsCount} times!`,{fontSize:20,color:'#ffffffff'});
-        this.add.text(16,22,`Time taken: ${(this.timeTaken / 1000).toFixed(2)} seconds`,{fontSize:20,color:'#ffffffff'});
-        this.time.delayedCall(5000, () => {this.gameEnded = false;
-            this.scene.start('Start');
-        }, [], this);
+    hasAllIngredients() { // kevin put this here 12/2/25
+        return (
+            this.gotFlour === "✔️" &&
+            this.gotWater === "✔️" &&
+            this.gotPork === "✔️" &&
+            this.gotCabbage === "✔️" &&
+            this.gotOnion === "✔️"
+        );
     }
 
     // Convert tiled object properties from array to object
     serializeObjectProperties(propertiesArray) {
         if (!propertiesArray) return {};
         const properties = {};
-        for(let prop of propertiesArray){
+        for (let prop of propertiesArray){
             properties[prop.name] = prop.value;
         }
         return properties;
@@ -178,6 +188,20 @@ export default class StartLevelKevin extends Phaser.Scene {
         this.timeTaken += delta;
 
         this.checklistText.setText ("[" + this.flour.display + "] Flour\n[" + this.water.display + "] Water\n[" + this.pork.display + "] Pork\n[" + this.cabbage.display + "] Cabbage\n[" + this.onion.display + "] Green onion");
+    
+        // kevin put this here 12/2/25
+        // cook elgibility
+        this.inKitchen = false; 
+        this.physics.world.overlap(this.player, this.kitchen, () => {
+            this.inKitchen = true;
+        }, null, this);
+        // if player in kitchen and press C, LET! HIM! COOK!
+        if (Phaser.Input.Keyboard.JustDown(this.player.keys.cook)) {
+            if (this.inKitchen && this.hasAllIngredients()) {
+                this.scene.start("Win");
+            }
+        }
+        
     }
 
     recordLog(){
