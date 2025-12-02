@@ -1,45 +1,37 @@
 # GENERAL
-Knigh attack mechanic (press J)
-Knight has coyote time (EXTRA CREDIT??)
-Knight can double jump(press spacebar rapidly) (EXTRA CREDIT)
 
-Knight automatically jumps over small obsticles(no more getting stuck on one pixel bump) (EXTRA CREDIT???)
+This game is about a guy named Ben (yes, TA Ben) who travels across the land looking for ingredients to make his favorite food, dumplings. There are enemies looking to steal from him or eat him alive. There are also pigs who want to escape being turned into meat filling. When the player has all the ingredients, they can return to the kitchen and cook their dumplings.
 
-Sometimes arcade physics glitch out and knight gets snapped back/down. Dont know what do to about this
+Attack:
+- Player can press J to slash that SOMETIMES kills enemies. Aim isn't always perfect in real life.
 
+Death:
+- Getting touched by an enemy NPC
 
-Knight leaves particles when walking
-Knight leaves particles when jumping
+Lose states
+- Losing all 3 lives
 
-Sound emitted when picking up coins, jumping, attacking, killing slimes, and finishing level
+Win state:
+- Collect all 5 ingredients scattered across the map
+- Press C while inside the kitchen
 
-# LEVEL VEE
+Controls:
+- Movement: WASD
+- Attack: J
+- Cook: C
+- Return to main menu: R
 
-Enemies Mechanic. They patrol back and forth and kill the player if he touches them. They die if attacked. Not very smart but ig they are slimes after all
+# NPC AND UNIQUE AI
 
-Lava mechanic. If you fall into it you die (EXTRA CREDIT)
+Thief enemy: Smart and sneaky. They will hide behind trees and wait for the player to get close enough before leaping out with a burst of speed and chasing down the player. If the player gets too far, it smartly returns to it's hiding spot behind the tree.
 
-Ladder mechanic. If you are on a ladder you can jump infinitely (essentially a double jump) (climb it) (EXTRA CREDIT)
+Evil Pig enemy: Not very smart or fast, but it can smell the player and know their location at all times. It travels from its home cobweb in a straight line towards the player until it is killed.
 
-Beating the level gives you all the stats (coins collected, slimes killed, time, times you died)
-
-Ladders, coins, enemies, player spawn point are all placed with object layer in phaser.
-
-4 tile layers: ground, decorations, background, and danger. Only collide with ground and hazards. Danger kills you on collision and respawn you at the start.
-
-An red flag is placed somewhere in the level. When touched, the level is complete.
-
+Pig: This NPC just wants to survive. It will run away from the player if the player gets too close. If it is chased into the edge of the map, it will disappear into the bushes and emerge elsewhere on the map.
 
 # LEVEL KEVIN
 
-Portals Mechanic. There are portals scattered throughout the map. 3 pairs of 2 = 6 total. When the player collides with one, they will be teleported to the corresponding portal's color counterpart (Example: Entering an orange portal with a white filler will teleport you to the orange portal with a black filler)
+This map has a layout that gives the thief enemies a nice environment to use to their advantage against the player. The trees and giant mushrooms can be used by the thieves as cover to ambush the player when they're least expecting it.
 
-Spikes mechanic. If you touch it you die (EXTRA CREDIT)
+# LEVEL SAM
 
-Beating the level gives you all the stats (coins collected, slimes killed, time, times you died)
-
-Coins and player spawn point are all placed with object layer in phaser.
-
-4 tile layers: ground, decorations, background, and danger. Only collide with ground and danger. Danger kills you on collision and respawn you at the start.
-
-An red flag is placed somewhere in the level. When touched, the level is complete.
