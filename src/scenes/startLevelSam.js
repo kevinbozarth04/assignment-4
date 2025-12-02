@@ -10,6 +10,12 @@ export default class StartLevelKevin extends Phaser.Scene {
     }
 
     create() {
+        this.time.addEvent({
+            delay: 5000, // Delay in milliseconds (5000 ms = 5 seconds)
+            callback: this.recordLog,
+            callbackScope: this, // Ensures 'this' in myRepeatingFunction refers to the scene
+            loop: true // Makes the event repeat indefinitely
+        });
         this.player = new Ben(this, 350, 740); // spawnpoint
         this.timeTaken = 0;
         this.enemies = [];
@@ -25,27 +31,39 @@ export default class StartLevelKevin extends Phaser.Scene {
         this.cameras.main.setZoom(4); // change to 4 later
 
         // INGREDIENTS
-        const flour = this.add.sprite(400, 300, 'flour').setScale(0.5); // set the starting coordinates yourself
-        const water = this.add.sprite(400, 400, 'water').setScale(0.5);
-        const pork = this.add.sprite(400, 500, 'pork').setScale(0.5);
-        const cabbage = this.add.sprite(400, 600, 'cabbage').setScale(0.5);
-        const onion = this.add.sprite(200, 400, 'onion').setScale(0.5);
-        this.physics.add.existing(flour, true);
-        this.physics.add.existing(water, true);
-        this.physics.add.existing(pork, true);
-        this.physics.add.existing(cabbage, true);
-        this.physics.add.existing(onion, true);
-        flour.setDepth(3);
-        water.setDepth(3);
-        pork.setDepth(3);
-        cabbage.setDepth(3);
-        onion.setDepth(3);
-        this.gotFlour = false;
-        this.gotWater = false;
-        this.gotPork = false;
-        this.gotCabbage = false;
-        this.gotOnion = false;
-
+        this.ingredients = this.physics.add.group();
+        this.flour = this.add.sprite(135, 660, 'flour').setScale(0.006); // set the starting coordinates yourself
+        this.ingredients.add(this.flour);
+        this.water = this.add.sprite(673, 527, 'water').setScale(0.006);
+        this.ingredients.add(this.water);
+        this.pork = this.add.sprite(97, 113, 'pork').setScale(0.005);
+        this.ingredients.add(this.pork);
+        this.cabbage = this.add.sprite(364, 321, 'cabbage').setScale(0.01);
+        this.ingredients.add(this.cabbage);
+        this.onion = this.add.sprite(716, 105, 'onion').setScale(0.008);
+        this.ingredients.add(this.onion);
+        this.physics.add.existing(this.flour, true);
+        this.physics.add.existing(this.water, true);
+        this.physics.add.existing(this.pork, true);
+        this.physics.add.existing(this.cabbage, true);
+        this.physics.add.existing(this.onion, true);
+        this.flour.setDepth(3);
+        this.water.setDepth(3);
+        this.pork.setDepth(3);
+        this.cabbage.setDepth(3);
+        this.onion.setDepth(3);
+        this.flour.got = false;
+        this.water.got = false;
+        this.pork.got = false;
+        this.cabbage.got = false;
+        this.onion.got = false;
+        this.flour.display = "❌";
+        this.water.display = "❌";
+        this.pork.display = "❌";
+        this.cabbage.display = "❌";
+        this.onion.display = "❌";
+        
+        this.physics.add.overlap(this.player, this.ingredients, this.markGotten, null, this);
         // NPCs
         const thief = this.add.sprite(100, 700, 'thief').setScale(0.7);
         this.physics.add.existing(thief, true);
@@ -100,7 +118,7 @@ export default class StartLevelKevin extends Phaser.Scene {
         this.healthText.setDepth(9999);
 
         this.checklistText = this.add.text(660, 350,
-            "[✔️] Flour\n[❌] Water\n[❌] Pork\n[❌] Cabbage\n[❌] Green onion",
+            "[" + this.flour.display + "] Flour\n[" + this.water.display + "] Water\n[" + this.pork.display + "] Pork\n[" + this.cabbage.display + "] Cabbage\n[" + this.onion.display + "] Green onion",
             {
                 fontSize: "26px",
                 color: "#ffffff",
@@ -131,6 +149,13 @@ export default class StartLevelKevin extends Phaser.Scene {
         return properties;
     }
 
+    markGotten(player, item){
+        item.got = true;
+        item.display = "✔️";
+        item.destroy();
+        this.sound.play("collect");
+    }
+
     instantiateGameObjectsFromLayer(map) {
         const objects = map.getObjectLayer("gameObjects").objects;
         for (let obj of objects) {
@@ -152,6 +177,13 @@ export default class StartLevelKevin extends Phaser.Scene {
         this.updatables.forEach(updatable => updatable.update());
         this.timeTaken += delta;
 
-
+        this.checklistText.setText ("[" + this.flour.display + "] Flour\n[" + this.water.display + "] Water\n[" + this.pork.display + "] Pork\n[" + this.cabbage.display + "] Cabbage\n[" + this.onion.display + "] Green onion");
     }
+
+    recordLog(){
+        console.log("this is the x: " + this.player.x);
+        console.log("this is the y: " + this.player.y);
+    }
+
+    //350, 746
 }
