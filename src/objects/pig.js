@@ -39,7 +39,7 @@ export default class Pig extends Phaser.Physics.Arcade.Sprite {
 
     relocate() {
         this.scene.sound.play('bush');
-        this.setPosition(Phaser.Math.Between(40, 760), Phaser.Math.Between(40, 760))
+        this.setPosition(Phaser.Math.Between(40, 760), Phaser.Math.Between(40, 660))
     }
 
     die() {

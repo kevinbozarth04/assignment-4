@@ -71,14 +71,14 @@ export default class Start extends Phaser.Scene {
 
         
 
-        /*
+        
         // music start
         let mus = this.sound.get('mysteryMusic');
         if (!mus) {
             mus = this.sound.add('mysteryMusic', {loop: true});
             mus.play();
         }
-        */
+        
 
         // start level
         this.input.keyboard.on('keydown-ONE', () => this.scene.start('StartLevelKevin'));
