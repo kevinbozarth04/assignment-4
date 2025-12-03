@@ -30,8 +30,8 @@ export default class Ben extends Phaser.Physics.Arcade.Sprite {
 
     }
 
-    die() {
-        this.hp -= 1;
+    die(damage) {
+        this.hp -= damage;
         this.scene.healthText.setText("Lives: " + this.hp);
         if (this.hp <= 0) {
             this.scene.scene.start("GameOver"); // game over screen

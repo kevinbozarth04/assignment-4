@@ -7,6 +7,7 @@ export default class EvilPig extends Phaser.Physics.Arcade.Sprite {
 
         this.scene = scene;
         this.player = player;
+        this.attack = 1;
 
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -22,7 +23,7 @@ export default class EvilPig extends Phaser.Physics.Arcade.Sprite {
         // Hurt player on touch
         scene.physics.add.overlap(player, this, () => {
             if (!this.active) return;
-            this.player.die();
+            this.player.die(this.attack);
         });
 
         this.speed = 80;

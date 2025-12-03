@@ -9,6 +9,7 @@ export default class Thief extends Phaser.Physics.Arcade.Sprite {
 
         this.scene = scene;
         this.player = player;
+        this.attack = 1;
 
         this.body.setAllowGravity(false);
         this.setDepth(20);
@@ -18,7 +19,7 @@ export default class Thief extends Phaser.Physics.Arcade.Sprite {
 
         // Damage player on touch
         scene.physics.add.overlap(player, this, () => {
-            this.player.die();
+            this.player.die(this.attack);
         });
 
         // AI behavior

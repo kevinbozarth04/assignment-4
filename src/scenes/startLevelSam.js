@@ -1,6 +1,7 @@
 // startLevelSam.js
 
 import Ben from '../objects/ben.js';
+import Crab from '../objects/crab.js';
 import Thief from '../objects/thief.js';
 
 export default class StartLevelKevin extends Phaser.Scene {
@@ -22,6 +23,7 @@ export default class StartLevelKevin extends Phaser.Scene {
 
         // TILEMAP
         const map = this.make.tilemap({ key: "StartLevelSam" });
+        this.map = map;
         const tileset = map.addTilesetImage("world_tileset", "world_tileset");
 
         // CAMERA
@@ -82,6 +84,8 @@ export default class StartLevelKevin extends Phaser.Scene {
         this.physics.add.existing(kitchen, true);
         kitchen.setDepth(2);
 
+        this.crabSpawned = false;
+
         // kevin put this here 12/2/25
         this.kitchen = kitchen; 
         this.inKitchen = false;
@@ -141,11 +145,11 @@ export default class StartLevelKevin extends Phaser.Scene {
 
     hasAllIngredients() { // kevin put this here 12/2/25
         return (
-            this.gotFlour === "✔️" &&
-            this.gotWater === "✔️" &&
-            this.gotPork === "✔️" &&
-            this.gotCabbage === "✔️" &&
-            this.gotOnion === "✔️"
+            this.flour.got === true &&
+            this.water.got === true &&
+            this.pork.got === true &&
+            this.cabbage.got === true &&
+            this.onion.got === true
         );
     }
 
@@ -182,6 +186,22 @@ export default class StartLevelKevin extends Phaser.Scene {
             }
         }
     }
+
+    spawnCrabs(map){
+        const objects = map.getObjectLayer("gameObjects").objects;
+        for (let obj of objects) {
+            // Convert tiled object properties from array to object
+            let properties = this.serializeObjectProperties(obj.properties);
+            switch(properties['type']){
+            case "crab":
+                const crab = new Crab (this, this.player, obj.x, obj.y);
+                this.physics.add.collider(crab, this.layers["obstacle"]);
+                this.enemies.push(crab);
+                break;
+            }
+        }
+        this.crabSpawned = true;
+    }
     
     update(time, delta) {
         this.updatables.forEach(updatable => updatable.update());
@@ -200,6 +220,10 @@ export default class StartLevelKevin extends Phaser.Scene {
             if (this.inKitchen && this.hasAllIngredients()) {
                 this.scene.start("Win");
             }
+        }
+
+        if(this.water.got == true && this.crabSpawned == false){
+            this.spawnCrabs(this.map);
         }
         
     }
