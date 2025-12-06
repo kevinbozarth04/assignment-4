@@ -3,6 +3,7 @@
 import Ben from '../objects/ben.js';
 import Crab from '../objects/crab.js';
 import Thief from '../objects/thief.js';
+import Pig from '../objects/pig.js';
 
 export default class StartLevelKevin extends Phaser.Scene {
     constructor() { super('StartLevelSam'); }
@@ -20,6 +21,7 @@ export default class StartLevelKevin extends Phaser.Scene {
         this.player = new Ben(this, 350, 740); // spawnpoint
         this.timeTaken = 0;
         this.enemies = [];
+        this.physics.add.collider(this.enemies, this.enemies);
 
         // TILEMAP
         const map = this.make.tilemap({ key: "StartLevelSam" });
@@ -66,25 +68,25 @@ export default class StartLevelKevin extends Phaser.Scene {
         this.onion.display = "❌";
         
         this.physics.add.overlap(this.player, this.ingredients, this.markGotten, null, this);
-        // NPCs
-        const thief = this.add.sprite(100, 700, 'thief').setScale(0.7);
-        this.physics.add.existing(thief, true);
-        thief.setDepth(3);
-
-        const pig = this.add.sprite(200, 600, 'pig').setScale(0.4);
-        this.physics.add.existing(pig, true);
-        pig.setDepth(3);
-
-        const evilPig = this.add.sprite(200, 700, 'evilPig').setScale(0.6);
-        this.physics.add.existing(evilPig, true);
-        evilPig.setDepth(3);
-
         // KITCHEN
         const kitchen = this.add.sprite(380, 730, 'kitchen').setScale(0.3);
         this.physics.add.existing(kitchen, true);
         kitchen.setDepth(2);
 
+        // CRAB
         this.crabSpawned = false;
+
+        // HIDING SPOTS
+        this.treeHidingSpots = [
+            { x: 176, y: 619},
+            { x: 316, y: 552},
+            { x: 267, y: 458},
+            { x: 115, y: 421},
+            { x: 123, y: 551},
+            { x: 63, y: 620},
+            { x: 303, y: 712},
+            { x: 158, y: 740}
+        ]
 
         // kevin put this here 12/2/25
         this.kitchen = kitchen; 
@@ -115,11 +117,6 @@ export default class StartLevelKevin extends Phaser.Scene {
         this.updatables = [];
         // this.enemies = [];
         this.instantiateGameObjectsFromLayer(map);
-
-        // CODE FOR YOU TO ADD
-        // - Enemy (thief or evil pig)
-        // - Pig
-        // - Spawn coordinates of all sprites
 
         // UI
         this.healthText = this.add.text(980, 350, "HP: 3", {
@@ -177,7 +174,10 @@ export default class StartLevelKevin extends Phaser.Scene {
             let properties = this.serializeObjectProperties(obj.properties);
             switch(properties['type']){
             case "thief":
-                this.enemies.push(new Thief(this, this.player, obj.x, obj.y, properties["minX"], properties["maxX"]));
+                this.enemies.push(new Thief(this, this.player, obj.x, obj.y, this.treeHidingSpots));
+                break;
+            case "pig":
+                this.enemies.push(new Pig(this, this.player, obj.x, obj.y));
                 break;
             case "spawn":
                 this.player.setPosition(obj.x, obj.y);
