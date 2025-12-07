@@ -4,6 +4,7 @@ import Ben from '../objects/ben.js';
 import Crab from '../objects/crab.js';
 import Thief from '../objects/thief.js';
 import Pig from '../objects/pig.js';
+import Frog from '../objects/frog.js';
 
 export default class StartLevelKevin extends Phaser.Scene {
     constructor() { super('StartLevelSam'); }
@@ -75,6 +76,14 @@ export default class StartLevelKevin extends Phaser.Scene {
 
         // CRAB
         this.crabSpawned = false;
+
+        // FROG
+        this.frog_bullet = this.physics.add.group();
+
+        this.physics.add.collider(this.player, this.frog_bullet, (p,f) => {
+            p.die(f.damage);
+            f.destroy();
+        })
 
         // HIDING SPOTS
         this.treeHidingSpots = [
@@ -178,6 +187,9 @@ export default class StartLevelKevin extends Phaser.Scene {
                 break;
             case "pig":
                 this.enemies.push(new Pig(this, this.player, obj.x, obj.y));
+                break;
+            case 'frog':
+                this.enemies.push(new Frog(this, this.player, obj.x, obj.y));
                 break;
             case "spawn":
                 this.player.setPosition(obj.x, obj.y);

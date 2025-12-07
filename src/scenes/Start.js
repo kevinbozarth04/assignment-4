@@ -27,6 +27,7 @@ export default class Start extends Phaser.Scene {
         this.load.image('pig', 'assets/sprites/pig.png');
         this.load.image('evilPig', 'assets/sprites/evil_pig.png');
         this.load.image('crab', 'assets/sprites/crab.png');
+        this.load.image('frog', 'assets/sprites/frog.png');
 
         // SOUNDS 
         this.load.audio('collect', 'assets/sounds/collect.wav');
@@ -55,6 +56,9 @@ export default class Start extends Phaser.Scene {
 
         this.load.image('dumplings', 'assets/sprites/dumplings.png');
         this.load.image('badDumplings', 'assets/sprites/bad_dumplings.jpeg');
+
+        // PROJECTILES
+        this.load.image('projectile', 'assets/sprites/projectile.png');
     }
 
     create() {

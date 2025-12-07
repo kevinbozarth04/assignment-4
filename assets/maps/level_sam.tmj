@@ -1194,6 +1194,96 @@
                  "width":4,
                  "x":129,
                  "y":119
+                }, 
+                {
+                 "gid":338,
+                 "height":4,
+                 "id":56,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"frog"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":4,
+                 "x":573.272727272727,
+                 "y":112.909090909091
+                }, 
+                {
+                 "gid":338,
+                 "height":4,
+                 "id":57,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"frog"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":4,
+                 "x":621.090909090909,
+                 "y":128
+                }, 
+                {
+                 "gid":1073742162,
+                 "height":4,
+                 "id":59,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"frog"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":4,
+                 "x":737.5,
+                 "y":138
+                }, 
+                {
+                 "gid":1073742162,
+                 "height":4,
+                 "id":60,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"frog"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":4,
+                 "x":686,
+                 "y":82
+                }, 
+                {
+                 "gid":1073742162,
+                 "height":4,
+                 "id":61,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"frog"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":4,
+                 "x":661,
+                 "y":187
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1202,7 +1292,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":56,
+ "nextobjectid":62,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

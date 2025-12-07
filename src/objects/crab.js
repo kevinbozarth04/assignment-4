@@ -4,7 +4,6 @@ export default class Crab extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, player, x, y){
         super(scene, x, y, 'crab');
 
-        //this.scene = scene;
         this.player = player;
 
         scene.add.existing(this);
@@ -38,6 +37,9 @@ export default class Crab extends Phaser.Physics.Arcade.Sprite{
         else{
             this.destroy();
         } 
+        //this.scene.time.delayedCall(300, () => {
+            //this.setImmune = false;
+        //});
         this.setImmune = false;
     }
 
