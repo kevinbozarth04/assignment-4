@@ -55,3 +55,42 @@ We changed the enemy AI portion of the rubric. It is now worth three points inst
 
 ## Self Evaluation
 
+### First Category
+
+Player Movement, 2 points: The player can move around the world, but their movement can be stopped when colliding with obstacle object layers and enemies.
+
+The player in both of our levels can move around using the WASD keys. Their movement is stopped when colliding with obstacles, however, it does not stop when colliding with most enemies. Enemies that attack by touching reset the player's position, so that technically counts as being stopped when colliding. However, other enemies, mainly in Sam's level, have their own attack, so if they reach the player the sort of clip into the player rather then stopping on them. But their attack can hit the player when they are clipping into them, which resets the player's position, so it kind of works. 
+
+1.8 points out of 2
+
+### Second Category
+
+Use of Intelligent AI, 3 points (individual): The enemies are able to chase the player and attack when close, and when certain conditions are met they can scatter and are able to attack from a distance.
+
+If anything, we underscoped in this category. Originally we were going to have one enemy type that would be in both levels, and would attack the player up close as well as from far away. However, we realized that having one enemy type acting the same, as well as being in both levels, would make the game vvery repetitive. We decided to make multiple enemy types that have different ways of moving and attacking, and both levels having different enemy types progammed seperately by us for our own levels. They follow a similar outline to our orignal idea where they move and act differently depending on different conditions being met. 
+
+3 points out of 3 for each of us
+
+### Third Category
+
+Cooking, 2 points: Once all the ingredients are gathered, the player is able to cook them in the kitchen to end the game.
+
+This was very easy to program from the rubric. Each of us approached how the internals of the game works with collecting the ingredients, but mechanically they work the exact same. The player is able to collect the ingredients and cook in the kitchen by pressing C.
+
+2 points out of 2 points
+
+### Fourth Category
+
+Attack, 2 points: The dumpling bandits take damage from the player’s attack, and only from the hitbox of it. The bandits also take some knockback after a hit.
+
+The player is able to press J to slash at the enemies of the game, and when they are hit by the slash they die. We weren't able to implement the knockback as our slash hits the enemies multiple times during a slash, and we'd have to essentially rework how the slash works entirely to implement it and there's simply not enough time. To make up for it, we made the enemies challenging to kill, as well as have a lot of them, so we say it makes up for it somewhat.
+
+1.8 points out of 2
+
+### Fifth Category
+
+Collisions, 1 point: The player and enemies are unable to move through obstacles.
+
+For the most part, out collisions work with the obstacles. However, there's a weird bug in Sam's level where the Frog's just ignore this logic despite being added to the enemy array, and the collision being applied to every single enemy in the array. It is not a problem with the placement of the collision addition in the code, as the Crab enemy is created after the game is already running. Sam cannot figure out why this bug is occuring, but the colission works on every single other enemy.
+
+1 point out of 1
