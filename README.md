@@ -51,7 +51,7 @@ This map has different biomes around the map, and each biome houses a different 
 
 ## Slight change to rubric
 
-We changed the enemy AI portion of the rubric. It is now worth three points instead of four, and these three points are the individual points of the self evaluation. We also added an extra category that has to do with the player and obstacle collisions worth one point. We will include our Design Document with the updated rubric in the zip of our project.
+We changed the enemy AI portion of the rubric. It is now worth three points instead of four, and these three points are the individual points of the self evaluation. We also added an extra category that has to do with the player and obstacle collisions worth one point. We will include our Design Document with the updated rubric in the zip of our project. The reason we opted to change the point count is because the AI used in our levels are made completely seperate from each other. The reason we added the extra point category is so that the total points for the rubric is still 10, as well as including a mechanic that is used throughout both levels.
 
 ## Self Evaluation
 
