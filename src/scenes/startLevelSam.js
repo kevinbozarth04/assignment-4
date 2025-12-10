@@ -86,18 +86,6 @@ export default class StartLevelKevin extends Phaser.Scene {
             f.destroy();
         })
 
-        // HIDING SPOTS
-        this.treeHidingSpots = [
-            { x: 176, y: 619},
-            { x: 316, y: 552},
-            { x: 267, y: 458},
-            { x: 115, y: 421},
-            { x: 123, y: 551},
-            { x: 63, y: 620},
-            { x: 303, y: 712},
-            { x: 158, y: 740}
-        ]
-
         // kevin put this here 12/2/25
         this.kitchen = kitchen; 
         this.inKitchen = false;

@@ -34,7 +34,6 @@ export default class Frog extends Phaser.Physics.Arcade.Sprite{
 
         const px = this.player.x;
         const py = this.player.y;
-        let random = Phaser.Math.Between(1, 1000);
 
         const distanceX = px - this.x;
         const distanceY = py - this.y;
