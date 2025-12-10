@@ -6,7 +6,7 @@ Attack:
 - Player can press J to slash that SOMETIMES kills enemies. Aim isn't always perfect in real life.
 
 Death:
-- Getting touched by an enemy NPC
+- Getting touched by an enemy NPC or their attack
 
 Lose states
 - Losing all 3 lives

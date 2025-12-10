@@ -28,6 +28,7 @@ export default class Start extends Phaser.Scene {
         this.load.image('evilPig', 'assets/sprites/evil_pig.png');
         this.load.image('crab', 'assets/sprites/crab.png');
         this.load.image('frog', 'assets/sprites/frog.png');
+        this.load.image('forestGnome', 'assets/sprites/forest_gnome.png');
 
         // SOUNDS 
         this.load.audio('collect', 'assets/sounds/collect.wav');

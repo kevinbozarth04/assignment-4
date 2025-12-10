@@ -9,7 +9,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
          this.scene = scene;
          this.last_time = this.scene.time.now;
          this.speed = 200;
-         this.damage = 1;
+         this.damage = 0.5;
          this.scene.time.delayedCall(10000, () => this.destroy());
     }
 

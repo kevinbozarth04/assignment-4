@@ -1060,14 +1060,14 @@
                         {
                          "name":"type",
                          "type":"string",
-                         "value":"thief"
+                         "value":"gnome"
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":4,
-                 "x":114.25,
-                 "y":430
+                 "x":99.9166666666667,
+                 "y":478.666666666667
                 }, 
                 {
                  "gid":408,
@@ -1078,14 +1078,14 @@
                         {
                          "name":"type",
                          "type":"string",
-                         "value":"thief"
+                         "value":"gnome"
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":4,
-                 "x":265.75,
-                 "y":465.25
+                 "x":232.083333333333,
+                 "y":469.583333333333
                 }, 
                 {
                  "gid":408,
@@ -1096,14 +1096,14 @@
                         {
                          "name":"type",
                          "type":"string",
-                         "value":"thief"
+                         "value":"gnome"
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":4,
-                 "x":314.25,
-                 "y":555.25
+                 "x":288.583333333333,
+                 "y":584.25
                 }, 
                 {
                  "gid":408,
@@ -1114,14 +1114,14 @@
                         {
                          "name":"type",
                          "type":"string",
-                         "value":"thief"
+                         "value":"gnome"
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":4,
-                 "x":122.5,
-                 "y":557.75
+                 "x":160.5,
+                 "y":540.416666666667
                 }, 
                 {
                  "gid":408,
@@ -1132,14 +1132,14 @@
                         {
                          "name":"type",
                          "type":"string",
-                         "value":"thief"
+                         "value":"gnome"
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":4,
-                 "x":173.75,
-                 "y":613.75
+                 "x":204.75,
+                 "y":625.75
                 }, 
                 {
                  "gid":408,
@@ -1150,14 +1150,14 @@
                         {
                          "name":"type",
                          "type":"string",
-                         "value":"thief"
+                         "value":"gnome"
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":4,
-                 "x":63,
-                 "y":624
+                 "x":92.6666666666667,
+                 "y":640.333333333333
                 }, 
                 {
                  "gid":408,
@@ -1168,14 +1168,14 @@
                         {
                          "name":"type",
                          "type":"string",
-                         "value":"thief"
+                         "value":"gnome"
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":4,
-                 "x":158,
-                 "y":757
+                 "x":115.666666666667,
+                 "y":750.333333333333
                 }, 
                 {
                  "gid":335,

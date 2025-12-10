@@ -5,6 +5,7 @@ import Crab from '../objects/crab.js';
 import Thief from '../objects/thief.js';
 import Pig from '../objects/pig.js';
 import Frog from '../objects/frog.js';
+import Forest_Gnome from '../objects/forest_gnome.js';
 
 export default class StartLevelKevin extends Phaser.Scene {
     constructor() { super('StartLevelSam'); }
@@ -118,7 +119,7 @@ export default class StartLevelKevin extends Phaser.Scene {
         this.layers["danger"].setCollisionByExclusion([-1]);
         this.player.depth = 10;
         this.physics.add.collider(this.player, this.layers["obstacle"]);
-        this.physics.add.collider(this.player, this.layers["danger"], () => {this.player.die();});
+        this.physics.add.collider(this.player, this.layers["danger"], () => {this.player.die(0.2);});
         this.enemies.forEach(enemy => { // enemy obstacle collision
             this.physics.add.collider(enemy, this.layers["obstacle"]);
         });
@@ -182,8 +183,8 @@ export default class StartLevelKevin extends Phaser.Scene {
             // Convert tiled object properties from array to object
             let properties = this.serializeObjectProperties(obj.properties);
             switch(properties['type']){
-            case "thief":
-                this.enemies.push(new Thief(this, this.player, obj.x, obj.y, this.treeHidingSpots));
+            case "gnome":
+                this.enemies.push(new Forest_Gnome(this, this.player, obj.x, obj.y));
                 break;
             case "pig":
                 this.enemies.push(new Pig(this, this.player, obj.x, obj.y));

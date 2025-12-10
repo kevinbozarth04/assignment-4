@@ -13,7 +13,7 @@ export default class Frog extends Phaser.Physics.Arcade.Sprite{
 
         this.speed = 80;
         this.state = 'idle';
-        this.attackRate = 3300;
+        this.attackRate = 3500;
         this.lastAttack = 0;
 
         scene.add.existing(this);
@@ -75,10 +75,9 @@ export default class Frog extends Phaser.Physics.Arcade.Sprite{
 
         if(this.state == 'attack'){
             this.body.setVelocity(0, 0);
-            this.state == 'attacking';
             
             this.scene.time.delayedCall(200, () =>{
-                var fBullet = new Bullet(this.scene, this.x, this.y, direction);
+                let fBullet = new Bullet(this.scene, this.x, this.y, direction);
                 this.scene.frog_bullet.add(fBullet);
                 this.lastAttack = time;
             });
@@ -96,7 +95,6 @@ export default class Frog extends Phaser.Physics.Arcade.Sprite{
         }
 
         if(this.state == 'return' && this.x == this.initialX && this.y == this.initialY){
-            this.body.setVelocity(0,0);
             this.state = 'idle';
         }
     }
