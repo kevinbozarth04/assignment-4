@@ -1,3 +1,7 @@
+# Dumpling Hunter Simlator
+## By Kevin Bozarth and Sam Gallo
+
+
 # GENERAL
 
 This game is about a guy named Ben (yes, TA Ben) who travels across the land looking for ingredients to make his favorite food, dumplings. There are enemies looking to steal from him or eat him alive. There are also pigs who want to escape being turned into meat filling. When the player has all the ingredients, they can return to the kitchen and cook their dumplings.
