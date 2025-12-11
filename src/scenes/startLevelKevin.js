@@ -4,7 +4,7 @@ import Ben from '../objects/ben.js';
 import Thief from '../objects/thief.js';
 import Pig from '../objects/pig.js';
 import EvilPig from '../objects/evilPig.js';
-
+import Crab from '../objects/crab.js';
 
 export default class StartLevelKevin extends Phaser.Scene {
     constructor() { super('StartLevelKevin'); }
@@ -172,6 +172,10 @@ export default class StartLevelKevin extends Phaser.Scene {
                 case "evilPig": // aka the js devs
                     const evilPig = new EvilPig(this, this.player, obj.x, obj.y);
                     this.enemies.push(evilPig);
+                    break;
+                case "crab":
+                    const crab = new Crab(this, this.player, obj.x, obj.y);
+                    this.enemies.push(crab);
                     break;
                 case "spawn":
                     this.player.setPosition(obj.x, obj.y);
