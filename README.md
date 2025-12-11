@@ -33,5 +33,7 @@ Pig: This NPC just wants to survive. It will run away from the player if the pla
 
 This map has a layout that gives the thief enemies a nice environment to use to their advantage against the player. The trees and giant mushrooms can be used by the thieves as cover to ambush the player when they're least expecting it.
 
+This level features thieves, pigs, and evil pigs.
+
 # LEVEL SAM
 
